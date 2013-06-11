@@ -5,7 +5,7 @@
 # vim:set ts=4 sw=4 et:
 
 pkgname=autojump-git
-pkgver=20130610
+pkgver=d692bc6
 pkgrel=1
 pkgdesc="A faster way to navigate your filesystem from the command line"
 arch=(any)
@@ -41,4 +41,13 @@ build() {
 package() {
     cd ${srcdir}/${_gitname}-build
     ./install.sh --global --destdir "${pkgdir}"
+}
+
+pkgver() {
+    if [ -d ${srcdir}/${_gitname} ]; then
+        REV=$(git --git-dir=${srcdir}/${_gitname}/.git rev-parse --short HEAD)
+        echo $REV
+    else
+        echo "20130610"
+    fi
 }

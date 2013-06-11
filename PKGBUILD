@@ -19,6 +19,7 @@ replaces=()
 backup=()
 source=('git+https://github.com/joelthelion/autojump.git')
 md5sums=('SKIP')
+install='install'
 
 _gitname="autojump"
 
@@ -31,9 +32,3 @@ pkgver() {
     cd ${_gitname}
     git describe --always | sed 's|-|.|g'
 }
-
-#Please add the line to ~/.bashrc :
-#
-#[[ -s /home/jason/dev/autojump-aur/autojump-aur/pkg/autojump-git/etc/profile.d/autojump.bash ]] && . /home/jason/dev/autojump-aur/autojump-aur/pkg/autojump-git/etc/profile.d/autojump.bash
-#
-#You need to run 'source ~/.bashrc' before you can start using autojump. To remove autojump, run './uninstall.sh'

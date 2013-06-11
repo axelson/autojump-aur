@@ -5,7 +5,7 @@
 # vim:set ts=4 sw=4 et:
 
 pkgname=autojump-git
-pkgver=d692bc6
+pkgver=release.v21.6.9.9.gd692bc6
 pkgrel=1
 pkgdesc="A faster way to navigate your filesystem from the command line"
 arch=(any)
@@ -17,37 +17,23 @@ conflicts=('autojump')
 provides=('autojump')
 replaces=()
 backup=()
-source=()
-md5sums=()
+source=('git+https://github.com/joelthelion/autojump.git')
+md5sums=('SKIP')
 
-_gitroot="git://github.com/joelthelion/autojump.git"
 _gitname="autojump"
 
-build() {
-    msg "connecting to git server..."
-
-    if [ -d ${srcdir}/${_gitname} ]; then
-        cd ${srcdir}/${_gitname} && git pull origin
-    else
-        git clone ${_gitroot} ${srcdir}/${_gitname}
-    fi
-
-    msg "git checkout done or server timeout"
-
-    rm -rf ${srcdir}/${_gitname}-build
-    git clone ${srcdir}/${_gitname} ${srcdir}/${_gitname}-build
-}
-
 package() {
-    cd ${srcdir}/${_gitname}-build
-    ./install.sh --global --destdir "${pkgdir}"
+    cd ${_gitname}
+    ./install.sh -Z /usr/share/zsh/site-functions/ --global --destdir "${pkgdir}"
 }
 
 pkgver() {
-    if [ -d ${srcdir}/${_gitname} ]; then
-        REV=$(git --git-dir=${srcdir}/${_gitname}/.git rev-parse --short HEAD)
-        echo $REV
-    else
-        echo "20130610"
-    fi
+    cd ${_gitname}
+    git describe --always | sed 's|-|.|g'
 }
+
+#Please add the line to ~/.bashrc :
+#
+#[[ -s /home/jason/dev/autojump-aur/autojump-aur/pkg/autojump-git/etc/profile.d/autojump.bash ]] && . /home/jason/dev/autojump-aur/autojump-aur/pkg/autojump-git/etc/profile.d/autojump.bash
+#
+#You need to run 'source ~/.bashrc' before you can start using autojump. To remove autojump, run './uninstall.sh'

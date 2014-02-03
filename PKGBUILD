@@ -5,7 +5,7 @@
 # vim:set ts=4 sw=4 et:
 
 pkgname=autojump-git
-pkgver=release.v21.6.9.9.gd692bc6
+pkgver=release.v21.6.9.133.g681068a
 pkgrel=1
 pkgdesc="A faster way to navigate your filesystem from the command line"
 arch=(any)
@@ -25,7 +25,7 @@ _gitname="autojump"
 
 package() {
     cd ${_gitname}
-    ./install.sh -Z /usr/share/zsh/site-functions/ --global --destdir "${pkgdir}"
+    ./install.py --destdir "${pkgdir}"
 }
 
 pkgver() {
